@@ -61,3 +61,8 @@ body.capture aside,body.capture .context{display:none!important}body.capture .wo
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 body[data-case="going"] .ending-note{background:#071322;color:#f8fafb;border:1px solid #f4ef4b}body[data-case="going"] .ending-note .primary{background:#f4ef4b;color:#071322;border-color:#f4ef4b}body[data-case="negi"] .ending-note{background:#1e1418;color:#f5e8d3;border:1px solid #d1ad77}body[data-case="negi"] .ending-note .primary{background:#a63549;color:#fff7ed;border-color:#c08b71}body[data-case="ochi"] .ending-note{background:#f4faff;color:#174169;border:1px solid #2867aa}body[data-case="ochi"] .ending-note .primary{background:#244ca0;border-color:#244ca0}body[data-case="dota"] .ending-note{background:#f6efe2;color:#51413b;border:1px solid #a9897c;font-family:"Noto Serif JP",serif}body[data-case="dota"] .ending-note .primary{background:#4e5148;border-color:#4e5148}
 .case-fukyo.phase-4 .finish-mark{float:right;width:36px;height:36px;font-size:20px;margin:0 0 0 8px}.case-fukyo.phase-4 .fan-label{display:none}.case-fukyo.phase-4 h1{font-size:27px;line-height:1.5;margin-top:9px}.case-fukyo.phase-4 .digital-ticket{clear:both;margin-top:20px}.case-fukyo.phase-4 .export-status{margin:14px 0 12px}
+
+/* A single illustrated hero keeps the uchiwa and card composition consistent. */
+.hero-fukyo{display:flex;flex-direction:column}
+.hero-fukyo .cover-kicker{align-self:flex-start}
+.hero-fukyo .cover-fukyo-art{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;margin:auto 0;flex-shrink:0}
