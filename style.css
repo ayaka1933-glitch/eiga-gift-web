@@ -74,3 +74,18 @@ body[data-case="going"] .ending-note{background:#071322;color:#f8fafb;border:1px
 .hero-negi .cover-negi-gift{margin:auto 0;width:100%;flex-shrink:0}
 .cover-negi-art{display:block;width:100%;height:auto;max-height:260px;aspect-ratio:4/3;object-fit:contain}
 .cover-negi-gift figcaption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* Compact covers keep the copy, artwork and action together. */
+.device.is-cover.case-negi,.device.is-cover.case-fukyo{height:auto;min-height:0}
+.case-negi.is-cover .hero-cover,.case-fukyo.is-cover .hero-cover{height:auto;min-height:0;padding-bottom:10px}
+.case-negi.is-cover .app-foot,.case-fukyo.is-cover .app-foot{position:relative;bottom:auto;height:auto}
+.hero-negi .cover-mark,.hero-fukyo .cover-mark{margin-bottom:0}
+.hero-negi .cover-kicker,.hero-fukyo .cover-kicker{margin-top:18px;margin-bottom:10px}
+.hero-negi .cover-title{margin-bottom:12px}
+.hero-negi .cover-negi-gift{margin:10px 0 0}
+.cover-negi-art{max-height:none;aspect-ratio:3/2;object-fit:cover}
+.hero-fukyo .cover-fukyo-art{margin:12px 0 0;filter:drop-shadow(0 8px 12px #ab4c8820)}
+.hero-fukyo{background-color:#fff5f9;background-image:radial-gradient(ellipse at 50% 80%,#f3c5e280,transparent 65%),radial-gradient(ellipse at 0 0,#fffdf8 10%,transparent 70%),linear-gradient(145deg,#fff1f6,#f7e8f6);background-size:100% 100%;background-repeat:no-repeat}
+.hero-fukyo::before{inset:10px;border:2px solid #fffaf7;border-radius:18px;box-shadow:inset 0 0 0 1px #ecc7dc80}
+.hero-fukyo .cover-kicker{background:#ffe1ee;color:#973e70;border:1px solid #efbbd5;border-radius:20px;padding:5px 11px}
+.case-fukyo.is-cover .app-foot{background:#fff4f9}
