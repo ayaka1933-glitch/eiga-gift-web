@@ -3,7 +3,7 @@ const CASES=[
 {id:'going',name:'Going Soon',tag:'作品から、誘う。',steps:['観たい作品から始める','GIFTと候補日を選ぶ','招待を仕上げる','LINEで招待が届く','一緒に観る日を相談'],ctas:['この映画で友人を誘う','招待メッセージを書く','招待を送る','予定を相談する','この予定で相談する']},
 {id:'negi',name:'ねぎらい予約GIFT',tag:'今の私から、未来の私へ。',steps:['何を頑張る自分へ？','GIFTを使う日を決める','未来の自分に書く','映画GIFTを事前購入','未来の自分へ贈りました','指定日にメールが届く','映画GIFTを使う'],ctas:['この自分を、ねぎらう','未来の自分への言葉を書く','映画GIFTの購入確認へ','映画GIFTを購入して贈る（デモ）','予約当日を体験する','今日、映画GIFTを使う','ムビチケ購入を体験する']},
 {id:'ochi',name:'落ち着いたら行こう',tag:'ふたりの余裕が重なるころに。',steps:['自分が落ち着く目安','急がない誘いを贈る','相手の目安も聞く','ふたりの目安を合わせる','候補日から相談する'],ctas:['急がない誘いを書く','行こう券を送る','この目安で返信する','日程の候補へ','この候補を送る']},
-{id:'fukyo',name:'布教券',tag:'この好き、あなたにも。',steps:['おすすめの作品を選ぶ','自分の言葉で書く','カラーと名前を決める','できあがりを確認する','画像を書き出す'],ctas:['おすすめの理由を書く','デザインを選ぶ','布教券をつくる','PNG画像を保存する','もう一枚つくる']},
+{id:'fukyo',name:'布教券',tag:'この好き、あなたにも。',steps:['おすすめの作品を選ぶ','自分の言葉で書く','カラーと名前を決める','できあがりを確認する','画像を保存・SNSで送る'],ctas:['おすすめの理由を書く','デザインを選ぶ','布教券をつくる','PNG画像を保存する','SNSで送る']},
 {id:'dota',name:'ごめんねGIFT',tag:'まず、ちゃんと謝る。',steps:['おわびの言葉を整える','添えるかどうかを選ぶ','手紙を確認する','LINEでおわびが届く','相手のペースで使う'],ctas:['言葉に添えるものを選ぶ','手紙を確認する','LINEでおわびを届ける（デモ）','添えられたGIFTを見る','自分のペースで映画へ']}
 ];
 
@@ -110,15 +110,56 @@ function fukyo(s,k){
  if(k===0)return '<div class="fan-label">映画好きの、ガチおすすめ。</div><h1 class="fan-headline">この出演者の、<br>ここを観てほしい！</h1><div class="uchiwa"><span class="fan-top">私の推しは</span><b class="long-tag">'+esc(s.actor)+'さん</b><span class="fan-bottom">この演技、観てほしい ♡</span></div>'+label('おすすめの作品・出演者',opt('film',FUKYO_EXAMPLES.map(x=>x.film)))+'<p class="help">作品を選び、自分の言葉で布教券をつくります。</p>';
  if(k===1)return '<div class="fan-label">あなたの好きな理由を、一枚に。</div><h1>表情・声・間。<br>どこを、観てほしい？</h1><div class="scrap-note"><span class="tape"></span><b>'+esc(s.film)+' ／ '+esc(s.actor)+'さん</b>'+area('message',s.message,180)+'</div>'+label('おすすめしたい出演者',input('actor',s.actor,'text','maxlength="25"'))+'<p class="help">結末は内緒。好きなところを、自分の言葉で。</p>';
  if(k===2)return '<div class="fan-label">好きな色で、あなたの布教券に。</div><div class="fan-to">BY '+input('staff',s.staff,'text','maxlength="20" aria-label="作成者の名前"')+'</div>'+colours(s)+fanCard(s)+'<p class="help">作品・人物は架空の作例です。色と名前を選んで仕上げます。</p>';
- if(k===3)return '<div class="fan-label">YOUR RECOMMENDATION, READY.</div><h1>できた。<br>この好き、あなたにも。</h1>'+fanCard(s)+'<div class="export-details"><b>PNG画像で保存</b><span>1,200 × 900px ／ 選んだ色・名前・おすすめ文を反映</span></div><p class="help">保存後は、画像を見せたり、友人に送ったり。<br>実際の映画GIFTの発行・購入・送信は行いません。</p>';
- return '<div class="finish-mark" aria-hidden="true">✓</div><div class="fan-label">YOUR RECOMMENDATION, IN ONE IMAGE.</div><h1>あなたの「好き」が、<br>一枚になりました。</h1>'+fanCard(s)+'<p class="export-status" role="status">'+(s.saved?'PNG画像のダウンロードを開始しました。':'布教券のできあがりです。')+'</p><button class="secondary-button" data-action="export-card">画像をもう一度保存する</button><p class="help">スマートフォンでダウンロードできない場合は、<br>上の画像を長押しして保存できます。</p>';
+ if(k===3)return '<div class="fan-label">YOUR RECOMMENDATION, READY.</div><h1>できた。<br>この好き、あなたにも。</h1>'+fanCard(s)+'<button class="secondary-button" data-action="share-fukyo-card">画像をSNSで送る</button><div class="export-details"><b>PNG画像で保存・SNSで送信</b><span>1,200 × 900px ／ 選んだ色・名前・おすすめ文を反映</span></div><p class="help">画像を保存したり、そのままSNSで送ったり。<br>実際の映画GIFTの発行・購入・送信は行いません。</p>';
+ return '<div class="finish-mark" aria-hidden="true">✓</div><div class="fan-label">YOUR RECOMMENDATION, IN ONE IMAGE.</div><h1>あなたの「好き」が、<br>一枚になりました。</h1>'+fanCard(s)+'<p class="export-status" role="status">'+(s.shared?'SNSの共有画面へ渡しました。':s.saved?'PNG画像のダウンロードを開始しました。':'布教券のできあがりです。')+'</p><button class="secondary-button" data-action="export-card">画像をもう一度保存する</button><button class="text-link" data-action="fukyo-new">もう一枚つくる</button><p class="help">スマートフォンでダウンロードできない場合は、<br>上の画像を長押しして保存できます。</p>';
 }
 let exportingCard=false;
 async function saveFukyoCard(){
  if(exportingCard)return;const s=state.fukyo;if(!s.message.trim()||fukyoCopyLines(s,24).length>7){show('fukyo',1);error='おすすめ文を7行以内に収まる長さで入力してください。';render();return;}
  exportingCard=true;const buttons=[...document.querySelectorAll('[data-action="export-card"],#device footer .primary')];buttons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true');});
- try{await document.fonts.ready;const response=await fetch(fukyoCardData(s)),blob=await response.blob(),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='布教券_'+s.film.replace(/[\\/:*?"<>|]/g,'_')+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);s.saved=true;persist();if(current==='fukyo')show('fukyo',4);}catch(e){toast('画像を長押しして保存する方法もお試しください。');}finally{exportingCard=false;buttons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy');});}
+ try{await document.fonts.ready;const response=await fetch(fukyoCardData(s)),blob=await response.blob(),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='布教券_'+s.film.replace(/[\\/:*?"<>|]/g,'_')+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);s.saved=true;s.shared=false;persist();if(current==='fukyo')show('fukyo',4);}catch(e){toast('画像を長押しして保存する方法もお試しください。');}finally{exportingCard=false;buttons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy');});}
 }
+let sharingCard=false;
+function fukyoShareFile(s){
+ const data=fukyoCardData(s),binary=atob(data.slice(data.indexOf(',')+1)),bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+ return new File([bytes],'布教券_'+s.film.replace(/[\\/:*?"<>|]/g,'_')+'.png',{type:'image/png'});
+}
+function fukyoShareText(s){return 'おすすめの映画は「'+s.film+'」。\n'+s.message+'\n#布教券 #映画GIFT';}
+async function copyFukyoText(){try{await navigator.clipboard.writeText(fukyoShareText(state.fukyo));toast('おすすめ文をコピーしました。');}catch{toast('おすすめ文を選択してコピーしてください。');}}
+function fukyoShareFallback(s){
+ modal('SNSで送る',fanCard(s)+'<p>画像を保存し、LINEやXなどの投稿画面に添付できます。</p><button class="secondary-button" data-action="copy-fukyo-text">おすすめ文をコピー</button>','画像を保存する',()=>{saveFukyoCard();});
+ $('.modal-box')?.classList.add('fukyo-share-options');
+}
+async function shareFukyoCard(){
+ if(sharingCard)return;const s=state.fukyo;
+ if(!s.message.trim()||fukyoCopyLines(s,24).length>7){show('fukyo',1);error='おすすめ文を7行以内に収まる長さで入力してください。';render();return;}
+ const file=fukyoShareFile(s),payload={files:[file],title:'布教券｜映画GIFT',text:fukyoShareText(s)};
+ if(!navigator.share||!navigator.canShare?.({files:[file]})){fukyoShareFallback(s);return;}
+ sharingCard=true;const buttons=[...document.querySelectorAll('[data-action="share-fukyo-card"],.case-fukyo.phase-4 .app-foot .primary')];buttons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true');});
+ try{await navigator.share(payload);s.shared=true;persist();if(current==='fukyo'&&state.fukyo===s)show('fukyo',4);}
+ catch(e){if(e.name!=='AbortError')fukyoShareFallback(s);}
+ finally{sharingCard=false;buttons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy');});}
+}
+let channelTimer=null;
+function cancelChannelHandoff(){
+ clearTimeout(channelTimer);channelTimer=null;const d=$('#device');d?.classList.remove('channel-pending');d?.querySelector('.channel-handoff')?.remove();d?.querySelectorAll(':scope > .screen,:scope > .app-foot,:scope > .app-head').forEach(e=>{e.inert=false;e.removeAttribute('aria-busy');});
+}
+function animateReceivedChannel(){
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const d=$('#device'),screen=d.querySelector('.screen');if(!screen?.animate)return;
+ screen.animate([{opacity:0},{opacity:1}],{duration:180});
+ const first=d.querySelector('.line-message')||d.querySelector('.mail-subject'),card=d.querySelector('.line-rich,.line-letter,.line-open-letter')||d.querySelector('.mail-gift');
+ for(const[node,delay]of[[first,100],[card,340]])if(node){node.style.transformOrigin='left top';node.animate([{opacity:0,transform:'translateY(13px) scale(.94)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:420,delay,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});}
+}
+function beginChannelHandoff(kind){
+ const d=$('#device'),mail=kind==='mail',overlay=document.createElement('div');overlay.className='channel-handoff '+(mail?'handoff-mail':'handoff-line');overlay.setAttribute('role','status');overlay.setAttribute('aria-live','polite');
+ overlay.innerHTML='<div class="handoff-card"><div class="handoff-icon" aria-hidden="true">'+(mail?'<svg viewBox="0 0 32 32"><rect x="5" y="8" width="22" height="16" rx="2"/><path d="m6 9 10 8 10-8"/></svg>':'<svg viewBox="0 0 32 32"><path d="M26 14c0 6-5 10-11 10l-7 3 1-5c-3-2-4-4-4-8C5 8 9 5 16 5s10 3 10 9Z"/><path d="M11 14h10"/></svg>')+'</div><small>受取体験のデモ</small><strong>'+(mail?'指定日のメール画面へ':'LINEの受取画面へ')+'</strong><p>'+(mail?'過去の自分から届くメールを開きます。':'ここからは、受け取る人の画面です。')+'</p></div>';
+ d.classList.add('channel-pending');d.querySelectorAll(':scope > .screen,:scope > .app-foot,:scope > .app-head').forEach(e=>{e.inert=true;e.setAttribute('aria-busy','true');});d.append(overlay);
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(!reduced)overlay.querySelector('.handoff-card').animate([{opacity:0,transform:'translateY(12px) scale(.92)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:300,easing:'cubic-bezier(.16,1,.3,1)'});
+ channelTimer=setTimeout(()=>{cancelChannelHandoff();animateReceivedChannel();const h=d.querySelector('.channel-head b,.mail-subject');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}},reduced?900:1150);
+}
+
 function animateScene(direction='forward'){
  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const node=$('#device .hero-cover')||$('#device .screen');if(!node?.animate)return;
  node.getAnimations().forEach(a=>a.cancel());const soft=current==='negi'||current==='dota',finish=(current==='negi'&&step===4)||(current==='fukyo'&&step===4)||direction==='reveal',travel=direction==='back'?-12:14;
@@ -179,10 +220,10 @@ function render(){
  if(step===-1)device.innerHTML=welcome(current);
  if((current==='going'||current==='dota')&&step===3)device.classList.add('channel-line');if(current==='negi'&&step===5&&s.paid&&giftDay(s))device.classList.add('channel-mail');enhance();renderModes();persist();
 }
-function show(id,k=-1){const previousCase=current,previousStep=step;if(typeof id==='number')id=CASES[id].id;current=CASES.some(c=>c.id===id)?id:'going';step=Math.max(-1,Math.min(CASES.find(c=>c.id===current).steps.length-1,Number(k)||0));error='';render();animateScene(previousCase===current&&step<previousStep?'back':'forward');const t=$('#device.channel-mail .mail-subject')||$('#device.channel-line .channel-head b')||$('#device .cover-title')||$('#device .step-mark');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}if(mobilePrototype()){const nav=$('#cases'),active=nav.querySelector('.active');if(active)nav.scrollLeft=active.offsetLeft-(nav.clientWidth-active.offsetWidth)/2;const scroller=$('#device .screen')||$('#device .hero-cover');if(scroller)scroller.scrollTop=0;}}
+function show(id,k=-1){const previousCase=current,previousStep=step,hadScreen=!!$('#device').firstElementChild;cancelChannelHandoff();if(typeof id==='number')id=CASES[id].id;current=CASES.some(c=>c.id===id)?id:'going';step=Math.max(-1,Math.min(CASES.find(c=>c.id===current).steps.length-1,Number(k)||0));error='';render();const direction=previousCase===current&&step<previousStep?'back':'forward',channel=$('#device').classList.contains('channel-line')?'line':$('#device').classList.contains('channel-mail')?'mail':null;if(channel&&direction!=='back'&&hadScreen&&(previousCase!==current||previousStep!==step))beginChannelHandoff(channel);else if(channel&&direction!=='back')animateReceivedChannel();else animateScene(direction);const t=$('#device.channel-mail .mail-subject')||$('#device.channel-line .channel-head b')||$('#device .cover-title')||$('#device .step-mark');if(t){t.tabIndex=-1;if(!channelTimer)t.focus({preventScroll:true});}if(mobilePrototype()){const nav=$('#cases'),active=nav.querySelector('.active');if(active)nav.scrollLeft=active.offsetLeft-(nav.clientWidth-active.offsetWidth)/2;const scroller=$('#device .screen')||$('#device .hero-cover');if(scroller)scroller.scrollTop=0;}}
 function next(){
  if(step===-1){show(current,0);return}if(current==='dota'&&step===3&&!state.dota.opened){state.dota.opened=true;persist();render();animateScene('reveal');return}
- const s=state[current];error='';if(current==='fukyo'&&step===3){saveFukyoCard();return}if(current==='fukyo'&&step===4){s.saved=false;show('fukyo',0);return}if(current==='fukyo'&&step===1&&fukyoCopyLines(s,24).length>7){error='おすすめ文は7行以内に収まる長さで入力してください。';render();return}if(current==='negi'&&step===5&&negiMode==='send'){enterNegiReceive();return}
+ const s=state[current];error='';if(current==='fukyo'&&step===3){saveFukyoCard();return}if(current==='fukyo'&&step===4){shareFukyoCard();return}if(current==='fukyo'&&step===1&&fukyoCopyLines(s,24).length>7){error='おすすめ文は7行以内に収まる長さで入力してください。';render();return}if(current==='negi'&&step===5&&negiMode==='send'){enterNegiReceive();return}
  if(current==='negi'&&step===3&&!s.agree){error='一日限定の条件をご確認ください。';render();return}
  if(['going','ochi','dota'].includes(current)&&step===0&&!String(s.to).trim()){error='お名前を入力してください。';render();return}
  if(['going','fukyo','dota'].includes(current)&&step===(current==='dota'?0:current==='going'?2:1)&&!String(s.message).trim()){error='ひと言を入力してください。';render();return}
@@ -209,14 +250,14 @@ async function copyShare(){
  try{await navigator.clipboard.writeText(url);toast('受取画面のデモリンクをコピーしました');}catch{modal('受取画面のデモリンク','<p>このリンクには入力したメッセージが含まれます。</p><textarea readonly>'+esc(url)+'</textarea>','閉じる',()=>{});}
 }
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.append(e);setTimeout(()=>e.remove(),2400);}
-document.addEventListener('input',e=>{const key=e.target.dataset.field;if(!key)return;state[current][key]=e.target.type==='checkbox'?e.target.checked:e.target.value;if(current==='fukyo'&&key==='staff'){const preview=$('#device .digital-ticket img');if(preview)preview.src=fukyoCardData(state.fukyo);}if(current==='negi'&&key==='occasionOther')state.negi.occasion=e.target.value;if(current==='negi'&&key==='date'&&!state.negi.moved)state.negi.original=e.target.value;persist();});
-document.addEventListener('change',e=>{const key=e.target.dataset.field;if(!key)return;state[current][key]=e.target.type==='checkbox'?e.target.checked:e.target.value;if(current==='fukyo'&&key==='film'){const preset=FUKYO_EXAMPLES.find(x=>x.film===e.target.value);if(preset)Object.assign(state.fukyo,{film:preset.film,actor:preset.actor,message:preset.message,tag:'出演者'});}persist();if(e.target.tagName==='SELECT'&&['film','spoiler'].includes(key))render();});
+document.addEventListener('input',e=>{const key=e.target.dataset.field;if(!key)return;state[current][key]=e.target.type==='checkbox'?e.target.checked:e.target.value;if(current==='fukyo')state.fukyo.shared=false;if(current==='fukyo'&&key==='staff'){const preview=$('#device .digital-ticket img');if(preview)preview.src=fukyoCardData(state.fukyo);}if(current==='negi'&&key==='occasionOther')state.negi.occasion=e.target.value;if(current==='negi'&&key==='date'&&!state.negi.moved)state.negi.original=e.target.value;persist();});
+document.addEventListener('change',e=>{const key=e.target.dataset.field;if(!key)return;state[current][key]=e.target.type==='checkbox'?e.target.checked:e.target.value;if(current==='fukyo')state.fukyo.shared=false;if(current==='fukyo'&&key==='film'){const preset=FUKYO_EXAMPLES.find(x=>x.film===e.target.value);if(preset)Object.assign(state.fukyo,{film:preset.film,actor:preset.actor,message:preset.message,tag:'出演者'});}persist();if(e.target.tagName==='SELECT'&&['film','spoiler'].includes(key))render();});
 document.addEventListener('click',e=>{
- const b=e.target.closest('button');if(!b)return;
+ const b=e.target.closest('button');if(!b)return;if(channelTimer&&b.closest('#device'))return;
  if(b.dataset.case){show(b.dataset.case);history.replaceState(null,'','?case='+b.dataset.case);return}
  if(b.dataset.step!==undefined){show(current,Number(b.dataset.step));return}
  const s=state[current];switch(b.dataset.action){
- case'genre-start':{const g=GOING_GENRES.find(x=>x[0]===b.dataset.value);if(g)state.going.film=g[2];show('going',0);break;}case'negi-receive':enterNegiReceive();break;case'negi-send':negiMode='send';history.replaceState(null,'','?case=negi');show('negi',-1);break;case'export-card':saveFukyoCard();break;case'occasion':s.occasionType=b.dataset.value;s.occasion=s.occasionType==='その他'?s.occasionOther:s.occasionType;render();break;case'colour':if(OSHI[b.dataset.value]){s.colour=b.dataset.value;render();}break;case'negi-restart':negiMode='send';show('negi',0);break;case'start':if(current==='negi')negiMode='send';show(current,0);break;case'open-letter':s.opened=true;render();animateScene('reveal');break;case'date':s[b.dataset.key]=b.dataset.value;if(current==='negi'&&!s.moved)s.original=s.date;render();break;case'month':{const key=b.dataset.key,base=parseDate(calendarMonth[current+key]||s[key]);base.setDate(1);base.setMonth(base.getMonth()+Number(b.dataset.value));calendarMonth[current+key]=iso(base);render();break;}case'next':next();break;case'back':if(current==='negi'&&negiMode==='receive'&&step===5){negiMode='send';history.replaceState(null,'','?case=negi');show('negi',-1);}else{show(current,step-1);}break;case'amount':s.amount=Number(b.dataset.value);render();break;case'choose':s[b.dataset.key]=b.dataset.value;render();break;case'flip':s.back=!s.back;render();break;case'reschedule':reschedule();break;case'share':copyShare();break;case'close':closeModal();break;case'reset':state[current]=Object.assign({},defaults[current]);persist();show(current);break;
+ case'genre-start':{const g=GOING_GENRES.find(x=>x[0]===b.dataset.value);if(g)state.going.film=g[2];show('going',0);break;}case'negi-receive':enterNegiReceive();break;case'negi-send':negiMode='send';history.replaceState(null,'','?case=negi');show('negi',-1);break;case'export-card':saveFukyoCard();break;case'share-fukyo-card':shareFukyoCard();break;case'fukyo-new':s.saved=false;s.shared=false;show('fukyo',0);break;case'copy-fukyo-text':copyFukyoText();break;case'occasion':s.occasionType=b.dataset.value;s.occasion=s.occasionType==='その他'?s.occasionOther:s.occasionType;render();break;case'colour':if(OSHI[b.dataset.value]){s.colour=b.dataset.value;s.shared=false;render();}break;case'negi-restart':negiMode='send';show('negi',0);break;case'start':if(current==='negi')negiMode='send';show(current,0);break;case'open-letter':s.opened=true;render();animateScene('reveal');break;case'date':s[b.dataset.key]=b.dataset.value;if(current==='negi'&&!s.moved)s.original=s.date;render();break;case'month':{const key=b.dataset.key,base=parseDate(calendarMonth[current+key]||s[key]);base.setDate(1);base.setMonth(base.getMonth()+Number(b.dataset.value));calendarMonth[current+key]=iso(base);render();break;}case'next':next();break;case'back':if(current==='negi'&&negiMode==='receive'&&step===5){negiMode='send';history.replaceState(null,'','?case=negi');show('negi',-1);}else{show(current,step-1);}break;case'amount':s.amount=Number(b.dataset.value);render();break;case'choose':s[b.dataset.key]=b.dataset.value;render();break;case'flip':s.back=!s.back;render();break;case'reschedule':reschedule();break;case'share':copyShare();break;case'close':closeModal();break;case'reset':state[current]=Object.assign({},defaults[current]);persist();show(current);break;
  }
 });
 const params=new URLSearchParams(location.search);current=params.get('case')||'going';if(current==='thanks')current='going';if(current==='bouquet')current='ochi';if(current==='negi'&&params.get('mode')==='receive'){negiMode='receive';Object.assign(state.negi,{paid:true,timeMode:'day',used:false});step=5;}if(current==='fukyo'&&params.get('view')==='line')step=3;
