@@ -163,3 +163,15 @@ body[data-case="going"] .ending-note{background:#071322;color:#f8fafb;border:1px
 .fukyo-share-options .secondary-button{margin-bottom:14px;color:#922b70}
 .line-fan-card .digital-ticket{margin:0;border:1px solid #c8cecb;border-radius:7px;overflow:hidden;background:#fff;filter:none}
 .case-fukyo.channel-line .app-foot .primary{background:#168e55;border-color:#168e55;color:#fff}
+
+/* Keep cover copy, artwork and actions together, independent of phone height. */
+@media (max-width:760px), (max-width:950px) and (pointer:coarse){
+ .workspace #device.device.is-cover{flex:0 1 auto;height:auto;max-height:100%;align-self:flex-start;border-radius:0 0 18px 18px}
+ #device.device.is-cover>.hero-cover{flex:0 1 auto;min-height:0;max-height:none}
+ #device.device.is-cover>.app-foot{flex:0 0 auto;margin-top:0}
+ #device .hero-negi .cover-negi-gift{display:block;flex:0 0 auto;min-height:0;margin:8px 0 0}
+ #device .hero-negi .cover-negi-art{height:auto;max-height:none;aspect-ratio:3/2;object-fit:cover}
+ #device .hero-fukyo .cover-fukyo-art{flex:0 0 auto;min-height:0;height:auto;max-height:none;aspect-ratio:4/3;margin:12px 0 0}
+ #device .hero-going .cinema-genre-nav{margin-top:54px}
+ #device .hero-dota .cover-letter-note{margin-bottom:12px}
+}
