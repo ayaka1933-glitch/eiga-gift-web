@@ -179,7 +179,7 @@ function render(){
  if(step===-1)device.innerHTML=welcome(current);
  if((current==='going'||current==='dota')&&step===3)device.classList.add('channel-line');if(current==='negi'&&step===5&&s.paid&&giftDay(s))device.classList.add('channel-mail');enhance();renderModes();persist();
 }
-function show(id,k=-1){const previousCase=current,previousStep=step;if(typeof id==='number')id=CASES[id].id;current=CASES.some(c=>c.id===id)?id:'going';step=Math.max(-1,Math.min(CASES.find(c=>c.id===current).steps.length-1,Number(k)||0));error='';render();animateScene(previousCase===current&&step<previousStep?'back':'forward');const t=$('#device.channel-mail .mail-subject')||$('#device.channel-line .channel-head b')||$('#device .cover-title')||$('#device .step-mark');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}if(matchMedia('(max-width: 760px)').matches)$('#device').scrollIntoView({block:'start',behavior:'instant'});}
+function show(id,k=-1){const previousCase=current,previousStep=step;if(typeof id==='number')id=CASES[id].id;current=CASES.some(c=>c.id===id)?id:'going';step=Math.max(-1,Math.min(CASES.find(c=>c.id===current).steps.length-1,Number(k)||0));error='';render();animateScene(previousCase===current&&step<previousStep?'back':'forward');const t=$('#device.channel-mail .mail-subject')||$('#device.channel-line .channel-head b')||$('#device .cover-title')||$('#device .step-mark');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}if(mobilePrototype()){const nav=$('#cases'),active=nav.querySelector('.active');if(active)nav.scrollLeft=active.offsetLeft-(nav.clientWidth-active.offsetWidth)/2;const scroller=$('#device .screen')||$('#device .hero-cover');if(scroller)scroller.scrollTop=0;}}
 function next(){
  if(step===-1){show(current,0);return}if(current==='dota'&&step===3&&!state.dota.opened){state.dota.opened=true;persist();render();animateScene('reveal');return}
  const s=state[current];error='';if(current==='fukyo'&&step===3){saveFukyoCard();return}if(current==='fukyo'&&step===4){s.saved=false;show('fukyo',0);return}if(current==='fukyo'&&step===1&&fukyoCopyLines(s,24).length>7){error='おすすめ文は7行以内に収まる長さで入力してください。';render();return}if(current==='negi'&&step===5&&negiMode==='send'){enterNegiReceive();return}
@@ -223,4 +223,18 @@ const params=new URLSearchParams(location.search);current=params.get('case')||'g
 try{if(location.hash.startsWith('#receive=')){const binary=atob(decodeURIComponent(location.hash.slice(9)));const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));const p=JSON.parse(new TextDecoder().decode(bytes));if(CASES.some(c=>c.id===p.id)){current=p.id;state[current]=Object.assign({},defaults[current],p.state);step=3;}}}catch{}
 document.addEventListener('keydown',e=>{const box=$('.modal-box');if(!box)return;if(e.key==='Escape'){e.preventDefault();closeModal();}if(e.key==='Tab'){const a=[...box.querySelectorAll('button,input,select,textarea,a[href]')].filter(x=>!x.disabled);const first=a[0],last=a.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});
 window.show=show;window.PROTOTYPE={CASES,FUKYO_EXAMPLES,get negiMode(){return negiMode},set negiMode(v){negiMode=v},get state(){return state},reset:()=>{state=JSON.parse(JSON.stringify(defaults));persist();render();},get current(){return current},get step(){return step}};
+function mobilePrototype(){return matchMedia('(max-width:760px), (max-width:950px) and (pointer:coarse)').matches;}
+function syncMobileViewport(){
+ const viewport=window.visualViewport;
+ if(!mobilePrototype()){document.documentElement.style.removeProperty('--app-viewport-height');return;}
+ if(viewport&&viewport.scale>1.05)return;
+ document.documentElement.style.setProperty('--app-viewport-height',(viewport?.height||window.innerHeight)+'px');
+ const active=document.activeElement;
+ if(active?.matches('#device input,#device textarea,#device select'))requestAnimationFrame(()=>active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'}));
+}
+let viewportFrame;
+function scheduleViewport(){cancelAnimationFrame(viewportFrame);viewportFrame=requestAnimationFrame(syncMobileViewport);}
+window.addEventListener('resize',scheduleViewport,{passive:true});
+window.visualViewport?.addEventListener('resize',scheduleViewport,{passive:true});
+syncMobileViewport();
 show(current,step);
