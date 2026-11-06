@@ -161,3 +161,5 @@ body[data-case="going"] .ending-note{background:#071322;color:#f8fafb;border:1px
 .fukyo-share-options .digital-ticket{margin:12px 0 18px;filter:none}
 .fukyo-share-options p{font-size:14px;line-height:1.8}
 .fukyo-share-options .secondary-button{margin-bottom:14px;color:#922b70}
+.line-fan-card .digital-ticket{margin:0;border:1px solid #c8cecb;border-radius:7px;overflow:hidden;background:#fff;filter:none}
+.case-fukyo.channel-line .app-foot .primary{background:#168e55;border-color:#168e55;color:#fff}
